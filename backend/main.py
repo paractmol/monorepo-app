@@ -13,10 +13,6 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
-# Define your PingResponse model
-class PingResponse(BaseModel):
-    reply: str
-
-@app.get("/ping", response_model=PingResponse)
+@app.get("/ping")
 def ping():
     return {"reply": "pong"}
