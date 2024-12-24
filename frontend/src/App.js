@@ -8,7 +8,7 @@ function App() {
   const fetchData = async () => {
     try {
       setStatus('loading'); // Show yellow lightbulb
-      const response = await fetch('http://0.0.0.0:10000/ping'); // URL of your FastAPI backend
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/ping`);
       const data = await response.json();
       setReply(data.reply);
       setStatus('ready'); // Show green lightbulb
