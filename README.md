@@ -17,3 +17,6 @@ Make sure to define environment variable REACT_APP_BACKEND_URL
 ```
 yarn install && yarn start
 ```
+
+Backend: https://monorepo-app.onrender.com/docs
+Frontend: https://monorepo-app-frontend.onrender.com
