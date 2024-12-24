@@ -4,11 +4,12 @@ import './App.css';
 function App() {
   const [reply, setReply] = useState('');
   const [status, setStatus] = useState('loading'); // 'loading', 'ready', 'error'
+  const [countdown, setCountdown] = useState(30); // Initial countdown time in seconds
 
   const fetchData = async () => {
     try {
       setStatus('loading'); // Show yellow lightbulb
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/ping`);
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL || "http://localhost:10000"}/ping`);
       const data = await response.json();
       setReply(data.reply);
       setStatus('ready'); // Show green lightbulb
@@ -19,28 +20,28 @@ function App() {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      fetchData();
+    fetchData(); // Fetch data when component mounts
 
-      // Wait for 10 seconds before the next request
-      const timeout = setTimeout(() => {
-        fetchData();
-      }, 10000);
+    const countdownInterval = setInterval(() => {
+      setCountdown(prevCountdown => {
+        if (prevCountdown > 0) {
+          return prevCountdown - 1;
+        } else {
+          fetchData(); // Fetch data when countdown reaches 0
+          return 30; // Reset countdown to 30 seconds
+        }
+      });
+    }, 1000);
 
-      return () => clearTimeout(timeout);
-    }, 30000);
-
-    // Initial fetch on component mount
-    fetchData();
-
-    return () => clearInterval(interval);
+    return () => clearInterval(countdownInterval); // Cleanup interval on component unmount
   }, []);
 
   return (
     <div className="App">
       <header className="App-header">
         <div className={`lightbulb ${status}`} />
-        <b>{reply}</b>
+        <p>{reply}</p>
+        <div>Next fetch in: {countdown} seconds</div>
       </header>
     </div>
   );
