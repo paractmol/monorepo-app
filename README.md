@@ -9,7 +9,7 @@ pip install -r requirements.txt
 uvicorn main:app --host 0.0.0.0 --port 10000
 ```
 
-# CORS middleware
+### CORS middleware
 
 **CORSMiddleware** allows you to specify which origins are permitted to access resources on your server, what methods are allowed, and which headers can be used. This is essential when your frontend and backend are hosted on different domains.
 
@@ -42,3 +42,6 @@ yarn install && yarn start
 
 Deploy static react app:
 https://render.com/docs/deploy-create-react-app
+
+## How to deploy it to render.com:
+https://youtu.be/888vl8K_rNM
